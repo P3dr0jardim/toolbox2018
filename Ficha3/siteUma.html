@@ -1,0 +1,1438 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 9]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<body class="home page-template page-template-page-templates page-template-home page-template-page-templateshome-php page page-id-5">
+<div id="page" class="site">
+    <!-- menu do site usando o foundation -->
+        <header>
+        <div class="title-bar homebar">
+            <div class="title-bar-left mainbar">
+                <i id="search-icon" class="option umafont icon-lupa" data-option="search"></i>
+                <div id="close-icon" class="b-container open">
+                    <div class="b-menu">
+                        <div class="b-bun b-bun--top"></div>
+                        <div class="b-bun b-bun--mid"></div>
+                        <div class="b-bun b-bun--bottom"></div>
+                    </div>
+                </div>
+                <i id="language-icon" class="option umafont icon-idioma" data-option="language"></i>
+                <!--<i id="language-icon" class="langswitcher" data-option="language">
+                    <a href="http://www.uma.pt/en/">EN</a>
+                </i>-->
+            </div>
+            <div id="menuButton" class="title-bar-right">
+                <div id="navcontrol" class="b-container" data-toggle="offCanvasRight">
+                    <div class="b-menu">
+                        <div class="b-bun b-bun--top"></div>
+                        <div class="b-bun b-bun--mid"></div>
+                        <div class="b-bun b-bun--bottom"></div>
+                    </div>
+                </div>
+            </div>
+            <a href="https://www.uma.pt" class="homeImage">
+                <!--<img class="blackbarimg" alt="UMA" src="https://www.uma.pt/wp-content/themes/uma/images/logo1_branco.png">-->
+                <img class="blackbarimg" alt="UMA" src="https://www.uma.pt/wp-content/themes/uma/images/Logo_UMa_site-01.png">
+                <img class="whitebarimg" alt="UMA" src="https://www.uma.pt/wp-content/themes/uma/images/logo2_cor.png">
+            </a>
+        </div>
+
+        <nav class="navbarOptions mainpageoption">
+            <div class="b-container open">
+                <div class="b-menu">
+                    <div class="b-bun b-bun--top"></div>
+                    <div class="b-bun b-bun--mid"></div>
+                    <div class="b-bun b-bun--bottom"></div>
+                </div>
+            </div>
+
+            <div class="row align-center">
+                <div class="small-12 medium-9 large-8 columns navbarSearch">
+                    
+<form id="mainSearch" role="search" method="get" class="search-form" action="https://www.uma.pt/">
+
+    <div class="pesquisa_geral_fundo">
+
+            <div class="row">
+                <div class="small-12 medium-12 large-12 columns">
+                    <div class="pesquisa_geral">
+                        <div class="pesquisa_geral_geral">
+                            <i class="icon-lupa icon_pesquisa_geral" aria-hidden="true"></i>
+                            <input v-model="filter" @keyup="search"
+                                   id="pesquisa_search" class="pesquisa_search"
+                                   placeholder="Indique-nos o que procura" value="" name="s"
+                                   autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+                            <span class="pesquisa_pesquisa_linha"></span>
+                            <div class="searchLoading" v-if="spalavras" :class="{'active': (spalavras && palavraschave.length < 1)}">
+                                <div class="loading active"></div>A pesquisar resultados
+                            </div>
+                            <div id="palavraschave">
+                                <a :href="palavra.url" class="pchave" v-for="palavra in palavraschave">{{palavra.title}}</a>
+                                <p v-if="(palavraschave.length == 0 && filter.length > 2 && !spalavras )" class="noresults">* Não foram encontrados resultados</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <div class="row pesquisa_resultados">
+                <div id="search_oferta" class="small-4 medium-4 large-4 columns pesquisa_geral_sugestoes hide">
+                    <h2>Oferta Formativa</h2>
+                    <div class="searchLoading" :class="{'active': showCursosLoader}"><div class="loading"></div>A pesquisar resultados</div>
+
+                    <a :href="curso.url" v-for="curso in cursos">
+                        <div class="row pesquisa_resultado">
+                            <div class="small-3 medium-3 large-3 columns">
+                                <div class="pesquisa_imagem" :style="{ backgroundImage: 'url('+curso.image+')' }"></div>
+                            </div>
+
+                            <div class="small-9 medium-9 large-9 columns">
+                                <h1>{{curso.title}}</h1>
+                            </div>
+                        </div>
+                    </a>
+                    <p v-if="(cursos.length == 0 && filter.length > 2 && !scursos )" class="noresults">* Não foram encontrados resultados</p>
+                </div>
+                <div id="search_membros" class="small-4 medium-4 large-4 columns pesquisa_geral_sugestoes hide">
+                    <h2>Membros da Academia</h2>
+                    <div class="searchLoading" :class="{'active': showPessoasLoader}"><div class="loading"></div>A pesquisar resultados</div>
+
+                    <a :href="pessoa.url" v-for="pessoa in pessoas">
+                        <div class="row pesquisa_resultado">
+                            <div class="small-3 medium-3 large-3 columns">
+                                <div class="pesquisa_imagem" :style="{ backgroundImage: 'url('+pessoa.image+')' }"></div>
+                            </div>
+                            <div class="small-9 medium-9 large-9 columns">
+                                <h1>{{pessoa.name}}</h1>
+                            </div>
+                        </div>
+                    </a>
+                    <p v-if="(pessoas.length == 0 && filter.length > 2 && !spessoas )" class="noresults">* Não foram encontrados resultados</p>
+                </div>
+                <div id="search_noticias" class="small-4 medium-4 large-4 columns pesquisa_geral_sugestoes hide">
+                    <h2>Notícias e Destaques</h2>
+                    <div class="searchLoading" :class="{'active': showNoticiasLoader}"><div class="loading"></div>A pesquisar resultados</div>
+
+                    <a :href="noticia.url" v-for="noticia in noticias">
+                        <div class="row pesquisa_resultado">
+                            <div class="small-3 medium-3 large-3 columns">
+                                <div class="pesquisa_imagem" :style="{ backgroundImage: 'url('+noticia.image+')' }"></div>
+                            </div>
+                            <div class="small-9 medium-9 large-9 columns">
+                                <h1>{{noticia.name}}</h1>
+                            </div>
+                        </div>
+                    </a>
+                    <p v-if="(noticias.length == 0 && filter.length > 2 && !snoticias )" class="noresults">* Não foram encontrados resultados</p>
+                </div>
+            </div>
+    </div>
+</form>                </div>
+                <div class="small-10 medium-10 large-10 columns navbarLanguage">
+                        <a class="" href="https://www.uma.pt/en/">
+                            English<span class="languageLine"></span></a>
+                        <a class="active" href="https://www.uma.pt/">
+                            Português<span class="languageLine"></span></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+	<div id="content" class="site-content">
+        <div class="off-canvas position-right " id="offCanvasRight" data-off-canvas data-transition="overlap">
+            <div class="menuColorWrapper">
+                <ul id="mainMenu" class="vertical menu" data-accordion-menu>
+                    <!--
+                      para construit o menu chamamos a função wpse_nav_menu_2_tree com o nome do menu
+                      "Menu 1" que está definido no backoffice do wordpress -->
+                                                                    <li>
+                                                            <a href="#">Sobre</a>
+                                                                                        <ul class="menu vertical nested">
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/sobre/historia/">
+                                                História                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/sobre/missao/">
+                                                Missão                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/sobre/orgaos-de-governo/">
+                                                Órgãos de Governo                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/sobre/faculdades-e-escolas/">
+                                                Faculdades e Escolas                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/sobre/servico-apoio-estudantes/">
+                                                Serviços Apoio Estudante                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/sobre/servicos-administrativos/">
+                                                Serviços Administrativos                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/sobre/extensao-universitaria/">
+                                                Extensão Universitária                                                                                            </a>
+                                        </li>
+                                                                    </ul>
+                                                    </li>
+                                                <li>
+                                                            <a href="#">Admissão</a>
+                                                                                        <ul class="menu vertical nested">
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/admissao/aluno-do-secundario/">
+                                                Aluno do Secundário                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/admissao/aluno-internacional/">
+                                                Aluno Internacional                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/admissao/continuar-percurso-academico/">
+                                                Continuar Percurso                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/admissao/maiores-23/">
+                                                Maiores de 23                                                                                            </a>
+                                        </li>
+                                                                    </ul>
+                                                    </li>
+                                                <li>
+                                                            <a href="#">Ensino</a>
+                                                                                        <ul class="menu vertical nested">
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/ensino/1o-ciclo/">
+                                                Licenciaturas                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/ensino/2o-ciclo/">
+                                                Mestrados                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/ensino/3o-ciclo/">
+                                                Doutoramentos                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/ensino/ctesp/">
+                                                CTESP                                                                                            </a>
+                                        </li>
+                                                                            <li>
+                                            <a class="lastitem" href="https://www.uma.pt/ensino/pos-graduacoes/">
+                                                Pós-Graduações                                                                                            </a>
+                                        </li>
+                                                                    </ul>
+                                                    </li>
+                                                <li>
+                                                                                            <a class="mainItem" href="https://www.uma.pt/investigacao/">
+                                                                    Investigação                                                                    </a>
+                                                                                </li>
+                                        </ul>
+                <!--<editor-fold desc="LANGUAGE">-->
+                <div class="row languageiphone">
+                    <div class="columns">
+                        <a class=""
+                           href="https://www.uma.pt/en/">
+                            EN</a>
+                        <a class="active"
+                           href="https://www.uma.pt/">
+                            PT</a>
+                    </div>
+                </div>
+                <!--</editor-fold>-->
+            </div>
+        </div>
+        <div class="off-canvas-content" data-off-canvas-content>
+        
+
+
+
+<div class="notificacaogeral is-moved-over">
+    <div class="row header">
+        <div class="small-12 columns">
+            <img src="https://www.uma.pt/wp-content/themes/uma/images/alerta/alerta_icon-19.png">
+            <p>COMUNICADOS E ALERTAS</p>
+            <button class="close-button" aria-label="Dismiss alert" type="button" data-toggle-callout="">
+                <span aria-hidden="true">¯</span>
+            </button>
+            <button class="open-button" aria-label="open alert" type="button" data-toggle-callout="">
+                <span aria-hidden="true">+</span>
+            </button>
+        </div>
+    </div>
+    <div class="row body">
+        <div class="small-12 columns">
+                        <div class="row alert">
+                <div class="small-4 columns imagecolumn">
+                                        <a class="course-callout-alert-link" href="" target="_blank"
+                       style='background-image: url("https://www.uma.pt/wp-content/uploads/2017/03/ecoturismo2.png");'>
+                    </a>
+                </div>
+                <div class="small-8 columns">
+                    <h1>Candidaturas Mestrado - Ecoturismo - 3ª fase</h1>
+                    <p>7 de Novembro a 9 de Novembro</p>
+                    <a class="saber_mais" href="https://www.umadeira.pt/ensino/2o-ciclo/licenciatura-em-ecoturismo/">
+                        Saber mais <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+                    </div>
+    </div>
+</div>
+
+
+
+<script>
+    var baseurl = "https://www.uma.pt/wp-content/themes/uma";
+    var data = {
+        images: [
+            //{url: baseurl+'/images/images_banner_home/ev1.jpg?v=1', template:59},
+            /*  {url: baseurl+'/images/images_banner_home/ctesp_img.jpg?v=1', template:612},*/
+            /*{url: baseurl+'/images/images_banner_home/abertura_ano_academico.jpg?v=1', template:56},
+             /*{url: baseurl+'/images/images_banner_home/licenciaturas_img.jpg?v=1', template:14},*/
+            /*{url: baseurl+'/images/images_banner_home/ctesp_img.jpg?v=1', template:57},*/
+            /* {url: baseurl+'/images/images_banner_home/pos_grad_2fase.jpg?v=1', template:60},*/
+            /*{url: baseurl+'/images/images_banner_home/boasvindas.jpg?v=1', template:88},*/
+            {url: baseurl+'/images/images_banner_home/estudanteinternacional.jpg?v=1', template:444},
+            {url: baseurl+'/images/images_banner_home/foto_estudar_uma.jpg?v=1', template:44},
+            {url: baseurl+'/images/images_banner_home/doutoramentos.jpg?v=1', template:4}
+
+        ]
+    };
+</script>
+
+<!--<div class="morearrow">
+    <i class="ms-Icon ms-Icon--ChevronDown x-hidden-focus" title="ChevronDown" aria-hidden="true"></i>
+</div>-->
+
+<div class="owl-carousel fullheigth" id="sliderApp">
+    <div class="owlImage" :class="{'luto': image.template == 10}" :href="image.url"
+         v-for="image in images"
+         :style="{ backgroundImage: 'url(' + image.url + ')', width:'100vw' }">
+
+        <div class="main_content" v-if="image.template == 1">
+            <h1 class="main_content_title">A universidade<br>que vai mudar<br>o teu futuro</h1>
+        </div>
+
+
+
+        <div class="main_content_tres" v-if="image.template == 44">
+
+            <div class="conteudo_banner">
+
+                <h5 class="main_content_subtitle">
+                                        Oferta Formativa                </h5>
+                <h1 class="main_content_title">
+                                        Estudar na UMa                </h1>
+                                <h5 class="main_content_subtitle_it">
+                    Mais de 60 cursos disponíveis (Licenciaturas, Mestrados, Doutoramentos, CTeSP e Pós-Graduações)                </h5>
+
+            </div>
+
+
+
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/ensino/" class="btn_action blck">
+                                        Saber Mais                </a>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="main_content_tres" v-if="image.template == 57">
+
+            <div class="conteudo_banner">
+                <h5 class="main_content_title">
+                    Candidaturas ao CTeSP<br>de Redes e Sistemas Informáticos                </h5>
+                                <h5 class="main_content_subtitle_it">
+                    1 a 4 de outubro                </h5>
+            </div>
+
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/noticias/2-a-fase-de-candidaturas-ao-tesp-em-redes-e-sistemas-informaticos" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://candidaturas.uma.pt" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="main_content_tres" v-if="image.template == 60">
+
+            <div class="conteudo_banner">
+
+                <h5 class="main_content_subtitle">
+
+                    
+
+                    CANDIDATURAS ABERTAS                </h5>
+                <h1 class="main_content_title">
+                                        Pós-Graduações                </h1>
+                
+                <h5 class="main_content_subtitle_it">
+                    Candidaturas de 3.ª fase - Gestão Empresarial / Controlo de Gestão e Performance - até 17 outubro                </h5>
+
+            </div>
+
+            <div class="main_content_actions">
+
+                <a href="https://www.uma.pt/noticias/pos-graduacoes-em-gestao-empresarial-e-controlo-de-gestao-e-performance-2" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://candidaturas.uma.pt" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+
+
+
+        <div class="main_content_tres" v-if="image.template == 88">
+
+
+            <div class="conteudo_banner">
+                <h5 class="main_content_title">
+                                        Matrículas da 2ª fase do<br>Concurso Nacional de Acesso                </h5>
+
+                                <h5 class="main_content_subtitle_it">
+                    As matrículas decorrem de 27 de setembro a 1 de outubro, na Unidade de Assuntos Académicos, Campus da Penteada                </h5>
+            </div>
+
+            <div class="main_content_actions">
+
+                <a href="https://www.uma.pt/noticias/matriculas-da-2-a-fase-do-concurso-nacional-de-acesso" class="btn_action blck">
+                                        Saber Mais                </a>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="main_content_dois" v-if="image.template == 56">
+
+            <div class="conteudo_banner">
+                                <h1 class="main_content_title">Abertura do<br>Ano Académico</h1>
+                <h5 class="main_content_subtitle">A sessão solene de abertura do Ano Académico decorreu<br>na passada segunda-feira, no Colégio dos Jesuítas</h5>
+            </div>
+
+            <div class="main_content_actions">
+                <a href="https://testuma.sharepoint.com/:f:/s/unidades/irp/EsleNfJ6AolErNQXc4PwtC4BJRq5lxi1h4CCG1UHcaSkOw?e=XqyIPA" class="btn_action blck">
+                                        ver galeria                </a>
+            </div>
+        </div>
+
+        <div class="main_content_dois" v-if="image.template == 59">
+
+            <div class="conteudo_banner">
+                                <h1 class="main_content_title">Matrículas da 3.ª fase do<br>Concurso Nacional de Acesso</h1>
+                <h5 class="main_content_subtitle">As matrículas decorrem durante os dias 12, 15 e 16 de outubro,<br>na Unidade de Assuntos Académicos, no piso do Campus da Penteada.</h5>
+            </div>
+
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/noticias/matriculas-da-3-a-fase-do-concurso-nacional-de-acesso" class="btn_action blck">
+                                        Saber Mais                </a>
+            </div>
+        </div>
+
+
+        <!--nnn-->
+        <div class="main_content_tres" v-if="image.template == 612">
+
+            <div class="conteudo_banner">
+
+                <h5 class="main_content_subtitle">
+                                        CANDIDATURAS ABERTAS                </h5>
+                <h1 class="main_content_title">
+                                        Cursos Técnicos Profissionais Superiores                </h1>
+                                <h5 class="main_content_subtitle_it">
+                    Agricultura Biológica / Reabilitação Energética e Conservação de Edifícios - 3ª fase - de 16 a 20 de outubro                </h5>
+
+            </div>
+
+
+
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/noticias/3a-fase-de-candidaturas-aos-cursos-tecnicos-superiores-profissionais-ctesp" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://candidaturas.uma.pt" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+        <!-- fim nnn -->
+
+
+
+        <div class="main_content_tres" v-if="image.template == 4">
+
+            <div class="conteudo_banner">
+
+                <h5 class="main_content_subtitle">
+                                        Candidaturas abertas                </h5>
+                <h1 class="main_content_title">
+                    Doutoramentos                </h1>
+                                <h5 class="main_content_subtitle_it">
+                    Cursos com datas de candidatura distintas:<br>Até 3 de setembro de 2018 e 1 de março de 2019                </h5>
+
+            </div>
+
+
+
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/ensino/3o-ciclo/" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://candidaturas.uma.pt" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+
+
+
+        <div class="main_content_tres" v-if="image.template == 444">
+
+            <div class="conteudo_banner">
+
+                <h5 class="main_content_subtitle">
+                                        Fase Extraordinária                </h5>
+                <h1 class="main_content_title">
+                                        Estudante Internacional                </h1>
+                                <h5 class="main_content_subtitle_it">
+                    Candidaturas até 31 de outubro de 2018                </h5>
+
+            </div>
+
+
+
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/noticias//estudante-internacional-2018-2019-fase-extraordinaria" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://candidaturas.uma.pt" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+
+
+
+        <div class="main_content_tres" v-if="image.template == 14">
+
+            <div class="conteudo_banner">
+
+                <h5 class="main_content_subtitle">
+                                        3ª FASE - CNA                </h5>
+                <h1 class="main_content_title">
+                                        Vagas Licenciaturas                </h1>
+                                <h5 class="main_content_subtitle_it">
+                    Cursos com vagas disponíveis para a 3.ª fase<br>do Concurso Nacional de Acesso                </h5>
+
+            </div>
+
+
+
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/noticias/3-a-fase-do-cna/?contentid=8182" class="btn_action blck">
+                                        Saber Mais                </a>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <!--
+        NESTES BANNERS PARA BAIXO FALTA a DIV CONTEUDO_BANNER-->
+
+
+
+
+
+
+        <div class="main_content_dois" v-if="image.template == 2">
+                        <h1 class="main_content_title">Matrículas da 1ª fase do<br>Concurso Nacional de Acesso</h1>
+            <h5 class="main_content_subtitle">As matrículas decorrem de<br class='hide-for-medium'> 10 a 14 de setembro de 2018,<br>no piso 2, no campus da Penteada</h5>
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/noticias/matriculas-da-1a-fase-do-concurso-nacional-de-acesso" class="btn_action blck">
+                                        Saber Mais                </a>
+            </div>
+        </div>
+
+        <div class="main_content_dois" v-if="image.template == 55">
+                        <h1 class="main_content_title">Receção aos Novos Alunos<br>dos CTeSP e 2.ª fase do CNA</h1>
+            <h5 class="main_content_subtitle">A Receção decorreu na manhã do dia 28 de setembro,<br> no Campus da Penteada e na Quinta de S. Roque.</h5>
+            <div class="main_content_actions">
+                <a href="https://testuma.sharepoint.com/:f:/s/unidades/irp/EmvLXtEg4n1DvHuO4brg-7EB5PqCwcTDAQZOe51GX68jvQ?e=oHP07C" class="btn_action blck">
+                                        ver galeria                </a>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="main_content_tres" v-if="image.template == 11">
+                                                <h5 class="main_content_subtitle">Candidaturas</h5>
+            <h1 class="main_content_title">Mestrados</h1>
+            <a class="main_content_subtitle_it" href="https://www.uma.pt/ensino/2o-ciclo/mestrado-em-ecoturismo">
+                                Ecoturismo (3ª fase): até 29 de Agosto            </a>
+            <a class="main_content_subtitle_it">
+                                Todos os restantes (2ª fase): até 19 de setembro            </a>
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/noticias/candidaturas-aos-mestrados-2018-2019" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://candidaturas.uma.pt" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+
+        <div class="main_content_tres" v-if="image.template == 3">
+                                    <h5 class="main_content_subtitle">3ª fase</h5>
+            <h1 class="main_content_title">Mestrado em Ecoturismo</h1>
+            <a class="main_content_subtitle_it">
+                                Candidaturas abertas até 29 de agosto            </a>
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/ensino/2o-ciclo/mestrado-em-ecoturismo" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://candidaturas.uma.pt" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+
+
+
+        <div class="main_content_tres" v-if="image.template == 41">
+            <h5 class="main_content_subtitle">
+                                Candidaturas abertas            </h5>
+            <h1 class="main_content_title">
+                Mestrados            </h1>
+                        <h5 class="main_content_subtitle_it">
+                Candidaturas abertas até 19 de setembro            </h5>
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/noticias/candidaturas-aos-mestrados-2018-2019" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://candidaturas.uma.pt" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+
+
+
+        
+        <div class="main_content_tres" v-if="image.template == 6">
+                        <h5 class="main_content_subtitle">1ª fase</h5>
+            <h1 class="main_content_title">Cursos Técnicos<br>Superiores Profissionais</h1>
+            <p class="main_content_subtitle_it">
+                                Candidaturas abertas até 31 de agosto            </p>
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/noticias/cursos-tecnicos-superiores-profissionais-ctesp" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://candidaturas.uma.pt" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+
+
+                    <div class="main_content_pessoa left" v-if="image.template == 7">
+                <h1 class="main_content_title">João Vieira</h1>
+                <p class="main_content_subtitle_it">
+                                        Docente e Investigador da UMa nomeado<br>Vice-Presidente da Glycovax Pharma                </p>
+                <div class="main_content_actions">
+                    <a href="https://www.uma.pt/noticias/docente-e-investigador-da-uma-nomeado-vice-presidente-da-glycovax-pharma" class="btn_action blck">
+                                                Saber Mais                    </a>
+                </div>
+            </div>
+        
+                    <div class="main_content_pessoa" v-if="image.template == 71">
+                <h1 class="main_content_title">Manfred Kaufmann</h1>
+                <p class="main_content_subtitle_it">
+                                        Docente da UMa integra<br>grupo de peritos das Nações Unidas                </p>
+                <div class="main_content_actions">
+                    <a href="https://www.uma.pt/noticias/docente-da-uma-integra-grupo-de-peritos-das-nacoes-unidas" class="btn_action blck">
+                                                Saber Mais                    </a>
+                </div>
+            </div>
+        
+
+        <div class="main_content_tres" v-if="image.template == 8">
+
+                        <h5 class="main_content_subtitle">CONCURSO NACIONAL DE ACESSO </h5>
+            <h1 class="main_content_title">Licenciaturas</h1>
+            <p class="main_content_subtitle_it">
+                                Apresentação da candidatura à 1.ª fase: de 18 de julho a 07 de agosto            </p>
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/noticias/candidate-se-a-as-nossas-licenciaturas" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://www.dges.gov.pt/online/Sessao/Iniciar.aspx" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+
+
+        <div class="main_content_tres" v-if="image.template == 9">
+                                    <h5 class="main_content_subtitle">2.ª FASE DE CANDIDATURAS ATÉ 21 DE SETEMBRO</h5>
+            <h1 class="main_content_title">Pós-Graduações</h1>
+            <!-- <p class="main_content_subtitle_it">
+                                            </p>-->
+
+            <h5 class="main_content_subtitle_it">
+                <a href="https://www.uma.pt/ensino/pos-graduacoes/pos-graduacao-em-gestao-empresarial-para-licenciados-noutras-areas">
+
+                                        Gestão Empresarial                 </a>
+                <a href="https://www.uma.pt/ensino/pos-graduacoes/controlo-de-gestao-e-performance">
+                                        Controlo de Gestão e Performance 
+                </a>
+
+            </h5>
+
+
+            <div class="main_content_actions">
+                <a href="https://www.uma.pt/ensino/pos-graduacoes/" class="btn_action blck">
+                                        Saber Mais                </a>
+                <a href="https://candidaturas.uma.pt" target="_blank" class="btn_action azul_site_background">
+                                        Candidate-se!                </a>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="row homesubmenu">
+    <div class="columns">
+        <a href="https://www.uma.pt/sobre/">Sobre</a>
+        <a href="https://www.uma.pt/admissao/">Admissão</a>
+        <a href="https://www.uma.pt/ensino/">Ensino</a>
+        <a href="https://www.uma.pt/investigacao/">Investigação</a>
+    </div>
+</div>
+
+<!-- <editor-fold desc="NOTICIAS"> -->
+<div class="colorwrapper">
+    <div class="row noticiassection align-center">
+        <div class="small-10 columns" id="mainrow" data-equalizer="foo">
+
+            <!--<div class="row align-center newsrow blockAnimate" id="mrow">
+                <div class="small-12 medium-12 large-12 columns newcolumn">
+
+                    <div class="row lutoalt" id="stalt">
+                        <div class="small-12 medium-4 large-3 columns">
+                            <img src="https://www.uma.pt/wp-content/themes/uma/images/doutorjoaocorreia.jpg">
+                        </div>
+                        <div class="small-12 medium-4 large-9 columns">
+                            <img class="lacoimg" src="https://www.uma.pt/wp-content/themes/uma/images/laco.png">
+                            <h6>Doutor João David Pinto Correia</h6>
+                            <p>
+                            É com enorme pesar que a Universidade da Madeira participa o falecimento do Professor Doutor João David Pinto Correia, antigo Presidente da terceira e última
+                            Comissão Instaladora da Universidade da Madeira, em mandato que exerceu entre 6 de maio de 1993 e 26 de julho de 1996.<br>
+                            O Professor Pinto Correia nasceu em 14 de dezembro de 1939, na freguesia de S. Gonçalo, concelho do Funchal, e era atualmente Professor aposentado da Faculdade
+                            de Letras da Universidade de Lisboa, onde exerceu a sua atividade docente e se dedicou às áreas de Literatura Oral e Tradicional, Literatura de Viagens, Literatura
+                            Portuguesa Medieval, e Literatura Madeirense. Foi igualmente autor de uma vasta produção científica, da qual se destacam os dois volumes de Os Romances Carolíngios da
+                            Tradição Oral Portuguesa, publicados pelo Instituto Nacional de Investigação Científica (INIC), em 1993-1994.<br><br>
+                            Na Universidade da Madeira sobrelevam, a par do exercício de Presidente da Comissão Instaladora, os contributos científicos e pedagógicos ao nível da docência,
+                            da reformulação de planos curriculares e da orientação científica no âmbito de mestrados e doutoramentos.<br><br>
+                            O falecimento do Professor David Pinto Correia deixa em todos quantos com ele tiveram o privilégio de conviver a memória de um ser humano excecional,
+                            profundamente empenhado nas causas maiores da vida e da cultura, sempre valorizadas pela sua inexcedível afabilidade e pela prática de uma amizade
+                            generosa e solidária.<br><br>
+                            À família, amigos e colegas a Universidade da Madeira apresenta as mais sentidas condolências.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="row align-center newsrow blockAnimate" id="mrow">
+                                                        <div class="small-12 medium-12 large-4 columns newcolumn">
+                        
+
+<div class="nnoticia_wrapper">
+    <div class="nnoticia_content" data-equalizer-watch="foo">
+        <a href="https://www.uma.pt/noticias/novos-projetos-de-investigacao-financiados-em-cerca-de-meio-milhao-de-euros?contentid=8299" class="noticia_img lazy" data-src="https://www.uma.pt/wp-content/uploads/2018/8299_main.jpg"></a>
+        <a href="https://www.uma.pt/noticias/novos-projetos-de-investigacao-financiados-em-cerca-de-meio-milhao-de-euros?contentid=8299" class="noticia_title">Novos projetos de investigação financiados em cerca de meio milhão de euros</a>
+        <i class=""></i>
+    </div>
+</div>
+
+                    </div>
+                                                        <div class="small-12 medium-12 large-4 columns newcolumn">
+                        
+
+<div class="nnoticia_wrapper">
+    <div class="nnoticia_content" data-equalizer-watch="foo">
+        <a href="https://www.uma.pt/noticias/colaboracao-entre-uma-huawei-e-nos-madeira-premia-melhores-alunos-da-fcee?contentid=8290" class="noticia_img lazy" data-src="https://www.uma.pt/wp-content/uploads/2018/8290_main.jpg"></a>
+        <a href="https://www.uma.pt/noticias/colaboracao-entre-uma-huawei-e-nos-madeira-premia-melhores-alunos-da-fcee?contentid=8290" class="noticia_title">Colaboração entre UMa, Huawei e NOS Madeira premia melhores alunos da FCEE</a>
+        <i class=""></i>
+    </div>
+</div>
+
+                    </div>
+                                                        <div class="small-12 medium-12 large-4 columns newcolumn">
+                        
+
+<div class="nnoticia_wrapper">
+    <div class="nnoticia_content" data-equalizer-watch="foo">
+        <a href="https://www.uma.pt/noticias/a-madeira-na-expansao-maritima-portuguesa?contentid=8285" class="noticia_img lazy" data-src="https://www.uma.pt/wp-content/uploads/2018/8285_main.jpg"></a>
+        <a href="https://www.uma.pt/noticias/a-madeira-na-expansao-maritima-portuguesa?contentid=8285" class="noticia_title">A Madeira na Expansão Marítima Portuguesa</a>
+        <i class=""></i>
+    </div>
+</div>
+
+                    </div>
+                            </div>
+            <div class="row align-center newsrow blockAnimate">
+                                                        <div class="small-12 medium-12 large-4 columns newcolumn">
+                        
+
+<div class="nnoticia_wrapper">
+    <div class="nnoticia_content" data-equalizer-watch="foo">
+        <a href="https://www.uma.pt/noticias/mesa-tematica-1o-ciclo-do-ensino-basico?contentid=8267" class="noticia_img lazy" data-src="https://www.uma.pt/wp-content/uploads/2018/8267_main.jpg"></a>
+        <a href="https://www.uma.pt/noticias/mesa-tematica-1o-ciclo-do-ensino-basico?contentid=8267" class="noticia_title">Mesa Temática: 1º Ciclo do Ensino Básico</a>
+        <i class=""></i>
+    </div>
+</div>
+
+                    </div>
+                                                        <div class="small-12 medium-12 large-4 columns newcolumn">
+                        
+
+<div class="nnoticia_wrapper">
+    <div class="nnoticia_content" data-equalizer-watch="foo">
+        <a href="https://www.uma.pt/noticias/a-quimica-e-divertida?contentid=8252" class="noticia_img lazy" data-src="https://www.uma.pt/wp-content/uploads/2018/8252_main.jpg"></a>
+        <a href="https://www.uma.pt/noticias/a-quimica-e-divertida?contentid=8252" class="noticia_title">A Química é Divertida</a>
+        <i class=""></i>
+    </div>
+</div>
+
+                    </div>
+                                                        <div class="small-12 medium-12 large-4 columns newcolumn">
+                        
+
+<div class="nnoticia_wrapper">
+    <div class="nnoticia_content" data-equalizer-watch="foo">
+        <a href="https://www.uma.pt/noticias/pre-festival-cinanima-festival-de-cinema-de-animacao-de-espinho-18?contentid=8279" class="noticia_img lazy" data-src="https://www.uma.pt/wp-content/uploads/2018/8279_main.jpg"></a>
+        <a href="https://www.uma.pt/noticias/pre-festival-cinanima-festival-de-cinema-de-animacao-de-espinho-18?contentid=8279" class="noticia_title">Pré-Festival. Cinanima &#8211; Festival de Cinema de Animação de Espinho 18</a>
+        <i class=""></i>
+    </div>
+</div>
+
+                    </div>
+                            </div>
+            <div id="searchvue" class="blockAnimate">
+                <div class="row searchbox">
+                    <div class="columns">
+                        <h1>QUAL O CURSO QUE PROCURA?</h1>
+                        <div class="inputwrapper">
+                            <input @keyup="searchCurso" @keyup.enter="submit" id="searchstring" placeholder="Pesquisa de cursos">
+                            <a class="button_Search" @click="submit"><i class="icon-lupa icon_pesquisa_geral"></i></a>
+                        </div>
+                        <div class="autocomplete showresult" style="display: block;">
+                            <div class="row">
+                                <div class="columns">
+                                    <ul class="resultlist" style="display: block;">
+                                        <li v-for="item in cursos">
+                                            <a :href="item.url">{{ item.nome }}</a>
+                                        </li>
+                                        <li v-if="(cursos.length === 0 && search.length > 2)" class="noresults">* Não foram encontrados resultados</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row newsrow blockAnimate">
+                                                        <div class="small-12 medium-12 large-4 columns newcolumn">
+                        
+
+<div class="nnoticia_wrapper">
+    <div class="nnoticia_content" data-equalizer-watch="foo">
+        <a href="https://www.uma.pt/noticias/vamos-falar-de-livros-3?contentid=7220" class="noticia_img lazy" data-src="https://www.uma.pt/wp-content/uploads/2018/7220_main.jpg"></a>
+        <a href="https://www.uma.pt/noticias/vamos-falar-de-livros-3?contentid=7220" class="noticia_title">Vamos Falar de Livros &#8211; 3</a>
+        <i class=""></i>
+    </div>
+</div>
+
+                    </div>
+                                                        <div class="small-12 medium-12 large-4 columns newcolumn">
+                        
+
+<div class="nnoticia_wrapper">
+    <div class="nnoticia_content" data-equalizer-watch="foo">
+        <a href="https://www.uma.pt/noticias/vii-coloquio-olhares-sobre-o-envelhecimento?contentid=6956" class="noticia_img lazy" data-src="https://www.uma.pt/wp-content/uploads/2018/6956_main.jpg"></a>
+        <a href="https://www.uma.pt/noticias/vii-coloquio-olhares-sobre-o-envelhecimento?contentid=6956" class="noticia_title">VII Colóquio “Olhares Sobre o Envelhecimento”</a>
+        <i class=""></i>
+    </div>
+</div>
+
+                    </div>
+                                                        <div class="small-12 medium-12 large-4 columns newcolumn">
+                        
+
+<div class="nnoticia_wrapper">
+    <div class="nnoticia_content" data-equalizer-watch="foo">
+        <a href="https://www.uma.pt/noticias/mad-nano18-emerging-trends-and-future-of-nanomaterials-for-human-health?contentid=7692" class="noticia_img lazy" data-src="https://www.uma.pt/wp-content/uploads/2018/7692_main.jpg"></a>
+        <a href="https://www.uma.pt/noticias/mad-nano18-emerging-trends-and-future-of-nanomaterials-for-human-health?contentid=7692" class="noticia_title">MAD-NANO18: Emerging Trends and Future of Nanomaterials for Human Health</a>
+        <i class=""></i>
+    </div>
+</div>
+
+                    </div>
+                            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- </editor-fold> -->
+
+<div class="blockAnimate">
+
+
+<script>
+    var endvalues = [15,6,62,6];
+</script>
+
+<div class="row counter align-center">
+    <div class="column small-10">
+        <div class="row">
+            <a href="https://www.uma.pt/investigacao/" class="columns square">
+                <span>0</span>
+                CENTROS DE <br> INVESTIGAÇÃO            </a>
+            <a href="https://www.uma.pt/sobre/servico-apoio-estudantes/" class="columns square">
+                <span>0</span>
+                SERVIÇOS DE APOIO<br>AO ESTUDANTE             </a>
+            <a href="https://www.uma.pt/oferta-formativa/" class="columns square">
+                <span>0</span>
+                Cursos<br>Superiores            </a>
+            <a href="https://www.uma.pt/sobre/faculdades-e-escolas/" class="columns square">
+                <span>0</span>
+                Faculdades<br>e Escolas            </a>
+        </div>
+
+    </div>
+</div>
+</div>
+<!--<div class="">
+</div>-->
+
+
+<div class="fullopacityvideolayer"></div>
+<div class="row videowrapper">
+    <div class="columns">
+        <div class="frameholder row align-center">
+            <div class="columns small-10">
+                <div class="videocontent">
+                    <div class="mfp-iframe-scaler">
+                        <div id="videoclosebtn" class="b-container open">
+                            <div class="b-menu">
+                                <div class="b-bun b-bun--top"></div>
+                                <div class="b-bun b-bun--mid"></div>
+                                <div class="b-bun b-bun--bottom"></div>
+                            </div>
+                        </div>
+                        <iframe id="video" src=""></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row noticiashome vigrid blockAnimate">
+    <div class="small-12 columns">
+        <div class="row">
+            <div class="columns flex2">
+                <a href="https://www.uma.pt/oferta-formativa/" title="" class="icon-play ajaxIframe">
+                    <div data-src="https://www.uma.pt/wp-content/themes/uma/images/homeimages/img_home0.jpg"
+                         class="videoGallery_image-background lazy">
+                    </div>
+                    <div class="module-videogallery_item_title">
+                        <span>A UMa conta com mais de 58 cursos superiores distribuídos por 6 Faculdades e Escolas</span>
+                    </div>
+                </a>
+            </div>
+            <div class="columns flex2">
+                <a href="https://www.uma.pt/admissao/" title="" class="icon-play ajaxIframe">
+                    <div data-src="https://www.uma.pt/wp-content/themes/uma/images/homeimages/resimages/img_home8_res.jpg"
+                         class="videoGallery_image-background lazy">
+                        <!--/images/homeimages/defaultgridimage.png"-->
+                    </div>
+                    <div class="module-videogallery_item_title">
+                        <span>Pretendes ingressar na UMa e não sabes quais as formas de ingresso que temos ao teu dispor?</span>
+                    </div>
+                </a>
+            </div>
+            <div class="columns">
+                <a href="https://www.uma.pt/investigacao/" title="" class="icon-play ajaxIframe">
+                    <div data-src="https://www.uma.pt/wp-content/themes/uma/images/homeimages/resimages/img_home2res.jpg"
+                         class="videoGallery_image-background lazy">
+                    </div>
+                    <div class="module-videogallery_item_title">
+                        <span>Já conheces os Centros de Investigação da UMa?</span>
+                    </div>
+                </a>
+            </div>
+            <div class="columns">
+                <a href="http://uda.uma.pt" title="" class="icon-play ajaxIframe">
+                    <div data-src="https://www.uma.pt/wp-content/themes/uma/images/homeimages/resimages/img_home3res.jpg"
+                         class="videoGallery_image-background lazy">
+                    </div>
+                    <div class="module-videogallery_item_title">
+                        <span>A Biblioteca da UMa conta com mais de 150 mil títulos</span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="columns flex2">
+                <a href="https://www.uma.pt/sobre/servico-apoio-estudantes/" title="" class="icon-play ajaxIframe">
+                    <div data-src="https://www.uma.pt/wp-content/themes/uma/images/homeimages/resimages/img_home5res.jpg"
+                         class="videoGallery_image-background lazy">
+                    </div>
+                    <div class="module-videogallery_item_title">
+                        <span>Dispomos de um conjunto de serviços que agilizam a tua passagem pela Universidade</span>
+                    </div>
+                </a>
+            </div>
+            <div class="columns">
+                <a href="https://www.uma.pt/horarios-calendarios/" title="" class="icon-play ajaxIframe">
+                    <div data-src="https://www.uma.pt/wp-content/themes/uma/images/homeimages/img_home1.jpg"
+                         class="videoGallery_image-background lazy">
+                    </div>
+                    <div class="module-videogallery_item_title">
+                        <span>Consulta os nossos calendários e horários</span>
+                    </div>
+                </a>
+            </div>
+            <div class="columns">
+                <a href="https://www.uma.pt/casos-de-sucesso/" title="" class="icon-play ajaxIframe">
+                    <div data-src="https://www.uma.pt/wp-content/themes/uma/images/homeimages/resimages/img_home11res.jpg"
+                         class="videoGallery_image-background lazy">
+                       <!-- /images/homeimages/defaultgridimage.png"-->
+                    </div>
+                    <div class="module-videogallery_item_title">
+                        <span>Já conheces os nossos casos de sucesso?</span>
+                    </div>
+                </a>
+            </div>
+            <div class="columns flex2 videocolumn">
+                                <a href="" title="" class="videolink" data-video="https://www.youtube.com/embed/pGaRjnb7O_c">
+                    <div data-src="https://www.uma.pt/wp-content/themes/uma/images/homeimages/img_video_home.jpg"
+                         class="videoGallery_image-background lazy">
+                    </div>
+                    <div class="module-videogallery_item_title">
+                        <span>Assiste ao nosso vídeo promocional e descobre mais sobre a Universidade</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="blockAnimate">
+    </div>-->
+
+
+<div class="blockAnimate">
+    
+<div class="row align-center">
+    <div class="small-10 medium-10 large-10 columns">
+        <div class="row ultimos_eventos">
+                            <div class="small-12 medium-6 large-3 columns cinza2_fundo2">
+                    <a class="noticialink" href="https://www.uma.pt/noticias/pre-festival-cinanima-festival-de-cinema-de-animacao-de-espinho-18">
+                        
+                            <div class="blue_box2">
+                                <p class="mes_evento">Out</p>
+                                <p class="dia_evento">31</p>
+                            </div>
+
+                            <div class="blue_box2_mobile defaultcolor ">
+                                <p class="dia_evento2">31</p>
+                                <p class="mes_evento2">Out</p>
+                            </div>
+
+                        <div class="titulo_evento4">
+                            Pré-Festival. Cinanima &#8211; Festival de Cinema de Animação de Espinho 18                        </div>
+                        <p class="hora_evento">09:00 | Colégio dos Jesuítas</p>
+                    </a>
+                </div>
+                            <div class="small-12 medium-6 large-3 columns cinza2_fundo2">
+                    <a class="noticialink" href="https://www.uma.pt/noticias/colaboracao-entre-uma-huawei-e-nos-madeira-premia-melhores-alunos-da-fcee">
+                        
+                            <div class="blue_box2">
+                                <p class="mes_evento">Out</p>
+                                <p class="dia_evento">31</p>
+                            </div>
+
+                            <div class="blue_box2_mobile defaultcolor ">
+                                <p class="dia_evento2">31</p>
+                                <p class="mes_evento2">Out</p>
+                            </div>
+
+                        <div class="titulo_evento4">
+                            Colaboração entre UMa, Huawei e NOS Madeira premia melhores alunos da FCEE                        </div>
+                        <p class="hora_evento">15:00 | Campus da Penteada</p>
+                    </a>
+                </div>
+                            <div class="small-12 medium-6 large-3 columns cinza2_fundo2">
+                    <a class="noticialink" href="https://www.uma.pt/noticias/a-madeira-na-expansao-maritima-portuguesa">
+                        
+                            <div class="blue_box2">
+                                <p class="mes_evento">Nov</p>
+                                <p class="dia_evento">02</p>
+                            </div>
+
+                            <div class="blue_box2_mobile defaultcolor ">
+                                <p class="dia_evento2">02</p>
+                                <p class="mes_evento2">Nov</p>
+                            </div>
+
+                        <div class="titulo_evento4">
+                            A Madeira na Expansão Marítima Portuguesa                        </div>
+                        <p class="hora_evento">09:00 | Auditório do Centro de Congressos do Porto Santo</p>
+                    </a>
+                </div>
+                            <div class="small-12 medium-6 large-3 columns cinza2_fundo2">
+                    <a class="noticialink" href="https://www.uma.pt/noticias/vamos-falar-de-livros-3">
+                        
+                            <div class="blue_box2">
+                                <p class="mes_evento">Nov</p>
+                                <p class="dia_evento">07</p>
+                            </div>
+
+                            <div class="blue_box2_mobile defaultcolor ">
+                                <p class="dia_evento2">07</p>
+                                <p class="mes_evento2">Nov</p>
+                            </div>
+
+                        <div class="titulo_evento4">
+                            Vamos Falar de Livros &#8211; 3                        </div>
+                        <p class="hora_evento"></p>
+                    </a>
+                </div>
+                    </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+</div>
+
+    </div><!-- offcanvas -->
+	</div><!-- #content -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+
+                <div class="row menufooter">
+            <div class="columns">
+                <!--<img class="logofooter" alt="UMA" src="https://www.uma.pt/wp-content/themes/uma/images/logo1_branco.png">-->
+<img class="logofooter" alt="UMA" src="https://www.uma.pt/wp-content/themes/uma/images/Logo_UMa_site-01.png">
+<div class="links">
+    <a><span>Email:</span> info@mail.uma.pt</a>
+    <a><span>Telefone:</span> (+351) 291 705 000</a>
+    <a href="https://www.uma.pt/contactos/">Contactos Adicionais</a>
+    <a href="https://www.uma.pt/privacidade-e-termos-de-utilizacao/">Privacidade e Termos de Utilização</a>
+</div>
+<a class="lastlink" href="https://www.uma.pt/contactos/">Pedir Informações <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i></a>
+
+  </div>
+            <div class="columns">
+                <h3 class="footerHeader">LIGAÇÕES</h3>
+                <div class="links">
+    <a href="https://www.uma.pt/sobre/faculdades-e-escolas/">Faculdades e Escolas</a>
+    <a href="https://www.uma.pt/investigacao/">Centros de Investigação</a>
+    <a href="https://www.uma.pt/horarios-calendarios/">Calendários e Horários</a>
+    <a href="https://www.uma.pt/eventos/">Calendário de Eventos</a>
+    <a href="https://www.uma.pt/noticias/">Notícias e Destaques</a>
+    <a href="https://www.uma.pt/directorio/">Diretório</a>
+    <a href="https://www.uma.pt/avaliacao-universidade-da-madeira/">Avaliação UMa</a>
+</div>
+<a href="https://www.uma.pt/oferta-formativa/" class="lastlink">
+    Oferta Formativa    <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i>
+</a>
+            </div>
+            <div class="columns">
+                <h3 class="footerHeader">SERVIÇOS</h3>
+                <div class="links">
+    <a href="https://www.uma.pt/sobre/servicos-administrativos/unidade-de-assuntos-academicos-uaa">Assuntos Académicos</a>
+    <a href="http://www.sasuma.pt/portal/index.php">Serviços de Acção Social</a>
+    <a href="https://www.uma.pt/sobre/servicos-administrativos/unidade-de-recursos-humanos-urh">Recursos Humanos</a>
+    <a href="https://www.uma.pt/sobre/servicos-administrativos/unidade-de-projetos-e-cooperacao-upc">Cooperação e Projetos</a>
+    <a href="http://poloemprego.uma.pt/">Pólo de Emprego</a>
+    <a href="http://uda.uma.pt">Biblioteca</a>
+</div>
+<a href="https://www.uma.pt/sobre/servico-apoio-estudantes/" class="lastlink">
+    Serviços Apoio Estudante <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i>
+</a>
+            </div>
+            <div class="columns">
+                <h3 class="footerHeader">ENSINO</h3>
+                
+<div class="links">
+    <a href="https://www.uma.pt/casos-de-sucesso/">Casos de Sucesso</a>
+    <a href="https://www.uma.pt/ensino/1o-ciclo/">Licenciaturas e Ciclos Básicos</a>
+    <a href="https://www.uma.pt/ensino/2o-ciclo/">Mestrados</a>
+    <a href="https://www.uma.pt/ensino/3o-ciclo/">Doutoramentos</a>
+    <a href="https://www.uma.pt/ensino/ctesp/">CTESP</a>
+    <a href="https://www.uma.pt/ensino/pos-graduacoes/">Pós-Graduações</a>
+</div>
+<a href="https://www.uma.pt/processo-de-candidatura/" class="lastlink">Processo de Candidatura <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i></a>
+
+            </div>
+            <div class="columns">
+                <h3 class="footerHeader">SIGA-NOS</h3>
+                
+<div class="links social">
+    <a target="_blank" href="https://www.facebook.com/UMaGIRP"><i class="fa fa-facebook"></i></a>
+    <a target="_blank" href="https://twitter.com/UMaGIRP"><i class="fa fa fa-twitter"></i></a>
+    <a target="_blank" href="https://plus.google.com/100728536791559324211"><i class="fa fa-google-plus"></i></a>
+    <a target="_blank" href="https://www.linkedin.com/in/umagirp"><i class="fa fa-linkedin"></i></a>
+    <a target="_blank" href="https://www.instagram.com/universidadedamadeira/"><i class="fa fa-instagram"></i></a>
+    <a target="_blank" href="https://www.youtube.com/user/UMadeiraGIRP"><i class="fa fa-youtube-play"></i></a>
+</div>
+<a class="lastlink"><!--Subscrever Newsletter <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i>--></a>
+            </div>
+        </div>
+        
+                <div class="row ipad">
+            <div class="columns logocolumn">
+                <!--<img class="logofooter" alt="UMA" src="https://www.uma.pt/wp-content/themes/uma/images/logo1_branco.png">-->
+<img class="logofooter" alt="UMA" src="https://www.uma.pt/wp-content/themes/uma/images/Logo_UMa_site-01.png">
+<div class="links">
+    <a><span>Email:</span> info@mail.uma.pt</a>
+    <a><span>Telefone:</span> (+351) 291 705 000</a>
+    <a href="https://www.uma.pt/contactos/">Contactos Adicionais</a>
+    <a href="https://www.uma.pt/privacidade-e-termos-de-utilizacao/">Privacidade e Termos de Utilização</a>
+</div>
+<a class="lastlink" href="https://www.uma.pt/contactos/">Pedir Informações <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i></a>
+
+            </div>
+            <div class="columns menucolumn">
+                <div class="row">
+                    <div class="columns" >
+                        <h3 class="footerHeader">LIGAÇÕES</h3>
+                        <div class="links">
+    <a href="https://www.uma.pt/sobre/faculdades-e-escolas/">Faculdades e Escolas</a>
+    <a href="https://www.uma.pt/investigacao/">Centros de Investigação</a>
+    <a href="https://www.uma.pt/horarios-calendarios/">Calendários e Horários</a>
+    <a href="https://www.uma.pt/eventos/">Calendário de Eventos</a>
+    <a href="https://www.uma.pt/noticias/">Notícias e Destaques</a>
+    <a href="https://www.uma.pt/directorio/">Diretório</a>
+    <a href="https://www.uma.pt/avaliacao-universidade-da-madeira/">Avaliação UMa</a>
+</div>
+<a href="https://www.uma.pt/oferta-formativa/" class="lastlink">
+    Oferta Formativa    <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i>
+</a>
+                    </div>
+                    <div class="columns">
+                        <h3 class="footerHeader">SERVIÇOS</h3>
+                        <div class="links">
+    <a href="https://www.uma.pt/sobre/servicos-administrativos/unidade-de-assuntos-academicos-uaa">Assuntos Académicos</a>
+    <a href="http://www.sasuma.pt/portal/index.php">Serviços de Acção Social</a>
+    <a href="https://www.uma.pt/sobre/servicos-administrativos/unidade-de-recursos-humanos-urh">Recursos Humanos</a>
+    <a href="https://www.uma.pt/sobre/servicos-administrativos/unidade-de-projetos-e-cooperacao-upc">Cooperação e Projetos</a>
+    <a href="http://poloemprego.uma.pt/">Pólo de Emprego</a>
+    <a href="http://uda.uma.pt">Biblioteca</a>
+</div>
+<a href="https://www.uma.pt/sobre/servico-apoio-estudantes/" class="lastlink">
+    Serviços Apoio Estudante <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i>
+</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns" >
+                        <h3 class="footerHeader">ENSINO</h3>
+                        
+<div class="links">
+    <a href="https://www.uma.pt/casos-de-sucesso/">Casos de Sucesso</a>
+    <a href="https://www.uma.pt/ensino/1o-ciclo/">Licenciaturas e Ciclos Básicos</a>
+    <a href="https://www.uma.pt/ensino/2o-ciclo/">Mestrados</a>
+    <a href="https://www.uma.pt/ensino/3o-ciclo/">Doutoramentos</a>
+    <a href="https://www.uma.pt/ensino/ctesp/">CTESP</a>
+    <a href="https://www.uma.pt/ensino/pos-graduacoes/">Pós-Graduações</a>
+</div>
+<a href="https://www.uma.pt/processo-de-candidatura/" class="lastlink">Processo de Candidatura <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i></a>
+
+                    </div>
+                    <div class="columns" >
+                        <h3 class="footerHeader">SIGA-NOS</h3>
+                        
+<div class="links social">
+    <a target="_blank" href="https://www.facebook.com/UMaGIRP"><i class="fa fa-facebook"></i></a>
+    <a target="_blank" href="https://twitter.com/UMaGIRP"><i class="fa fa fa-twitter"></i></a>
+    <a target="_blank" href="https://plus.google.com/100728536791559324211"><i class="fa fa-google-plus"></i></a>
+    <a target="_blank" href="https://www.linkedin.com/in/umagirp"><i class="fa fa-linkedin"></i></a>
+    <a target="_blank" href="https://www.instagram.com/universidadedamadeira/"><i class="fa fa-instagram"></i></a>
+    <a target="_blank" href="https://www.youtube.com/user/UMadeiraGIRP"><i class="fa fa-youtube-play"></i></a>
+</div>
+<a class="lastlink"><!--Subscrever Newsletter <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i>--></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+                <div class="row iphone">
+            <div class="columns">
+                <div class="row info_footer">
+                    <div class="columns">
+                        <!--<img class="logofooter" alt="UMA" src="https://www.uma.pt/wp-content/themes/uma/images/logo1_branco.png">-->
+<img class="logofooter" alt="UMA" src="https://www.uma.pt/wp-content/themes/uma/images/Logo_UMa_site-01.png">
+<div class="links">
+    <a><span>Email:</span> info@mail.uma.pt</a>
+    <a><span>Telefone:</span> (+351) 291 705 000</a>
+    <a href="https://www.uma.pt/contactos/">Contactos Adicionais</a>
+    <a href="https://www.uma.pt/privacidade-e-termos-de-utilizacao/">Privacidade e Termos de Utilização</a>
+</div>
+<a class="lastlink" href="https://www.uma.pt/contactos/">Pedir Informações <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i></a>
+
+                    </div>
+                </div>
+                <div class="row accordionrow">
+                    <div class="columns">
+                        <ul class="accordion" data-accordion data-allow-all-closed="true">
+                            <li class="accordion-item" data-accordion-item>
+                                <a href="#" class="accordion-title">LIGAÇÕES</a>
+                                <div class="accordion-content" data-tab-content >
+                                    <div class="links">
+    <a href="https://www.uma.pt/sobre/faculdades-e-escolas/">Faculdades e Escolas</a>
+    <a href="https://www.uma.pt/investigacao/">Centros de Investigação</a>
+    <a href="https://www.uma.pt/horarios-calendarios/">Calendários e Horários</a>
+    <a href="https://www.uma.pt/eventos/">Calendário de Eventos</a>
+    <a href="https://www.uma.pt/noticias/">Notícias e Destaques</a>
+    <a href="https://www.uma.pt/directorio/">Diretório</a>
+    <a href="https://www.uma.pt/avaliacao-universidade-da-madeira/">Avaliação UMa</a>
+</div>
+<a href="https://www.uma.pt/oferta-formativa/" class="lastlink">
+    Oferta Formativa    <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i>
+</a>
+                                </div>
+                            </li>
+                            <li class="accordion-item" data-accordion-item>
+                                <a href="#" class="accordion-title">SERVIÇOS</a>
+                                <div class="accordion-content" data-tab-content>
+                                    <div class="links">
+    <a href="https://www.uma.pt/sobre/servicos-administrativos/unidade-de-assuntos-academicos-uaa">Assuntos Académicos</a>
+    <a href="http://www.sasuma.pt/portal/index.php">Serviços de Acção Social</a>
+    <a href="https://www.uma.pt/sobre/servicos-administrativos/unidade-de-recursos-humanos-urh">Recursos Humanos</a>
+    <a href="https://www.uma.pt/sobre/servicos-administrativos/unidade-de-projetos-e-cooperacao-upc">Cooperação e Projetos</a>
+    <a href="http://poloemprego.uma.pt/">Pólo de Emprego</a>
+    <a href="http://uda.uma.pt">Biblioteca</a>
+</div>
+<a href="https://www.uma.pt/sobre/servico-apoio-estudantes/" class="lastlink">
+    Serviços Apoio Estudante <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i>
+</a>
+                                </div>
+                            </li>
+                            <li class="accordion-item" data-accordion-item>
+                                <a href="#" class="accordion-title">ENSINO</a>
+                                <div class="accordion-content" data-tab-content>
+                                    
+<div class="links">
+    <a href="https://www.uma.pt/casos-de-sucesso/">Casos de Sucesso</a>
+    <a href="https://www.uma.pt/ensino/1o-ciclo/">Licenciaturas e Ciclos Básicos</a>
+    <a href="https://www.uma.pt/ensino/2o-ciclo/">Mestrados</a>
+    <a href="https://www.uma.pt/ensino/3o-ciclo/">Doutoramentos</a>
+    <a href="https://www.uma.pt/ensino/ctesp/">CTESP</a>
+    <a href="https://www.uma.pt/ensino/pos-graduacoes/">Pós-Graduações</a>
+</div>
+<a href="https://www.uma.pt/processo-de-candidatura/" class="lastlink">Processo de Candidatura <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i></a>
+
+                                </div>
+                            </li>
+                            <li class="accordion-item" data-accordion-item>
+                                <a href="#" class="accordion-title">SIGA-NOS</a>
+                                <div class="accordion-content" data-tab-content>
+                                    
+<div class="links social">
+    <a target="_blank" href="https://www.facebook.com/UMaGIRP"><i class="fa fa-facebook"></i></a>
+    <a target="_blank" href="https://twitter.com/UMaGIRP"><i class="fa fa fa-twitter"></i></a>
+    <a target="_blank" href="https://plus.google.com/100728536791559324211"><i class="fa fa-google-plus"></i></a>
+    <a target="_blank" href="https://www.linkedin.com/in/umagirp"><i class="fa fa-linkedin"></i></a>
+    <a target="_blank" href="https://www.instagram.com/universidadedamadeira/"><i class="fa fa-instagram"></i></a>
+    <a target="_blank" href="https://www.youtube.com/user/UMadeiraGIRP"><i class="fa fa-youtube-play"></i></a>
+</div>
+<a class="lastlink"><!--Subscrever Newsletter <i class="fa fa-chevron-right azul_site_color" aria-hidden="true"></i>--></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="row box_final">
+            <div class="small-12 medium-12 large-12 columns box_copyright">
+                <p>Copyright © UNIVERSIDADE da MADEIRA</p>
+            </div>
+        </div>
+
+	</footer>
+</div><!-- #page -->
+
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wpcf7 = {"apiSettings":{"root":"https:\/\/www.uma.pt\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"recaptcha":{"messages":{"empty":"Por favor, confirme que n\u00e3o \u00e9 um rob\u00f4."}}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=5.0.1'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/navigation.js?ver=20151215'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/Rx.min.js?ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/skip-link-focus-fix.js?ver=20151215'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/vue.js?ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/axios.min.js?ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/lodash.min.js?ver=1.0'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/js/foundation.min.js?ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/slick.js?ver=1.0'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/8.6.0/lazyload.min.js?ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/app.js?t=1541013248&#038;ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/navbar.js?ver=1.11'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/flickity.pkgd.min.js?ver=1.0'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jQuery-viewport-checker/1.8.8/jquery.viewportchecker.min.js?ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/handlebars-v4.0.11.js?ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/navbarSearch.js?ver=1.0'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ajaxcalls = {"ajaxurl":"https:\/\/www.uma.pt\/wp-admin\/admin-ajax.php","query_vars":"[]"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/ajaxCalls.js?t=1541013248&#038;ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/include-homepage.js?t=1541013248&#038;ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/callout.js?t=1541013248&#038;ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/owl.carousel.min.js?t=1541013248&#038;ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/home.js?t=1541013248&#038;ver=1.0'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/themes/uma/js/homeSearch.js?t=1541013248&#038;ver=1.0'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGlobus = {"version":"1.9.14","language":"pt","enabledLanguages":["pt","en"]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.uma.pt/wp-content/plugins/wpglobus/includes/js/wpglobus.min.js?ver=1.9.14'></script>
+<script type='text/javascript' src='https://www.uma.pt/wp-includes/js/wp-embed.min.js'></script>
+
+
+
+</body>
+</html>
+
+

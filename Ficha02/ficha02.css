@@ -1,0 +1,49 @@
+@media (min-width: 600px) {
+.flexwrapper {
+ background-color: indigo;
+ height: 97vh;
+ display: flex;
+ flex-direction: column;
+}
+.flexItems {
+ display: flex;
+ align-items: center;
+ min-height: 6.25rem;
+ padding: 1rem;
+}
+header {
+    width: 100%;
+    background-color: #105B63;
+    order: 1;
+   }
+   footer {
+       width: 100%;
+    background-color: #BD4932;
+    order: 7;
+   }
+   nav {
+    width: 100%;
+    background-color: rgb(255, 240, 145);
+    order: 2;
+   }
+   .foco {
+       width: 100%;
+    background-color: #BD4932;
+    order: 3;
+   }
+   .ultimas {
+       flex: 2;
+       order: 4;
+      background-color: #DB9E36;
+   }
+   .agenda {
+    background-color: #FFD34E;
+    flex: 1;
+    order: 5;
+   }
+   .links {
+    background-color: #DB9E36;
+ 
+    order: 6;
+   }
+}
