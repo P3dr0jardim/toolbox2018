@@ -1,0 +1,29 @@
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+        h1 {
+            font-size: 1.9rem;
+        }
+      }
+      .jumbotron{
+          width: 1000px;
+          height: 400px;
+          background-image: url("bar.jpg");
+          background-repeat: repeat-y;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: auto;
+        
+      }
+      .py-3 {
+        background-color: #343a40;
+        color: white;
+    }
+ 
