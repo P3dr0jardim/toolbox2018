@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<title>Exercício 7</title>
+</head>
+<body>
+ <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+ <div id="exercicio7">
+     <button @click="toggle = !toggle">botão</button>
+     <tansition>
+     <div v-if="toggle">Texto</div> 
+    </tansition>
+ </div>
+ <style>
+    .deslizar-enter {
+        transform: translateY(20px);
+    }
+    .deslizar-enter-active {
+        animation: desliza-entrada 1s ease-out forwards
+    }
+    .deslizar-leave {
+ /*o forwards mantem a posição do elemento que tinha
+ no fim da animação, em vez de regressar à posição inicial*/
+    }
+    .deslizar-leave-active{
+        animation: desliza-saida 1s ease-out forwards
+    }
+    @keyframes desliza-entrada {
+        from {
+            transform: translateY(20px);
+    }
+    to {
+            transform: translateY(0);
+        }
+    }
+    @keyframes desliza-saida {
+        from {
+            transform: translateY(0);
+    }
+    to {
+            transform: translateY(20px);
+        }
+    }
+ </style>
+ <style>
+     .fade-enter-active {
+        transition: opacity 0.5s;
+    }
+    .fade-enter {
+        opacity: 0;
+    }
+ </style>
+ <script>
+ new Vue({
+ el: '#exercicio7',
+ data: {
+     toggle: false
+ }
+ });
+ </script>
+    <section class="row log" v-if="turns.length > 0">
+        <div class="small-12 columns">
+            <ul>
+                <transition enter-active-class="animated bounce" leave-active-class="animated shake">
+                    <div v-if="toggle">Texto 3</div>
+                    </transition> 
+            </ul>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>Exercicio 7 - Máximo, minimo e a média de uma sequencia.</h1>
+        <button v-on:click="soma(numero,total)">Calcular a Operação</button> <br> <br>
+        <p>{{total}}</p>
+        
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.6/dist/vue.js"></script>
+    <script>
+        var aplicacao = new Vue({
+            el: '#app',
+            data: {
+                numero: 0,
+                total: 0,
+                conta:0
+            },
+            methods: {
+                soma: function (numero, total) {
+                  
+                  for (let index = 0; index < 100; index++) {
+                      this.total += index;
+                  }
+
+                  
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

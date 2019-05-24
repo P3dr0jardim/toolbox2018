@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>Exercicio 2 - Mes</h1>
+        <h3>Insira o numero do mes </h3>
+        <input type="text" v-model="mes">
+
+        <button v-on:click="calculaMes(mes)">Verificar mes</button> <br> <br>
+        <p>{{valor}}</p>
+        
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.6/dist/vue.js"></script>
+    <script>
+        var aplicacao = new Vue({
+            el: '#app',
+            data: {
+               mes:0 ,
+               valor:''
+            },
+            methods: {
+                calculaMes: function (valor) {
+                    if (valor == 1) {this.valor='Janeiro'}
+                    else if (valor == 2) {this.valor='Fevereiro'}
+                    else if (valor == 3) {this.valor='Março'}
+                    else if (valor == 4) {this.valor='Abril'}
+                    else if (valor == 5) {this.valor='Maio'}
+                    else if (valor == 6) {this.valor='Junho'}
+                    else if (valor == 7) {this.valor='Julho'}
+                    else if (valor == 8) {this.valor='Agosto'}
+                    else if (valor == 9) {this.valor='Setembro'}
+                    else if (valor == 10) {this.valor='Outubro'}
+                    else if (valor == 11) {this.valor='Novembro'}
+                    else if (valor == 12) {this.valor='Dezembro'}
+
+                }
+                
+                    
+            }
+        })
+    </script>
+
+</body>
+
+</html>

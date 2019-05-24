@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>Exercicio 1 - Média</h1>
+        <h3>Insira a nota pratica </h3>
+        <input type="text" v-model="nota1">
+        <h3>Insira a nota teorica</h3>
+        <input type="text" v-model="nota2">
+        <button v-on:click="media(nota1,nota2)">Calcular a media</button> <br> <br>
+        <p>{{valor}}</p>
+        {{ valor>9?'Aprovado':'Reprovado' }}
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.6/dist/vue.js"></script>
+    <script>
+        var aplicacao = new Vue({
+            el: '#app',
+            data: {
+                nota1: 0,
+                nota2: 0,
+                valor: 0
+            },
+            methods: {
+                media: function (nota1, nota2) {
+                    this.valor = (nota1*1 + nota2*1) / 2
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

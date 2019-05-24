@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>Exercicio 3 - Operação</h1>
+        <h3>Insira o primeiro numero </h3>
+        <input type="text" v-model="numero1">
+        <h3>Insira o segundo numero</h3>
+        <input type="text" v-model="numero2">
+        <h3>Insira uma operação (+ ; - ; x ; / ou ^)</h3>
+        <input type="text" v-model="operacao">
+        <button v-on:click="calculo(numero1 , numero2, operacao)">Calcular a Operação</button> <br> <br>
+        <p>{{valor}}</p>
+        
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.6/dist/vue.js"></script>
+    <script>
+        var aplicacao = new Vue({
+            el: '#app',
+            data: {
+                numero1: 0,
+                numero2: 0,
+                valor: 0,
+                operacao: ''
+            },
+            methods: {
+                calculo: function (numero1, numero2, operacao) {
+                    if (operacao == '+') {this.valor = (numero1*1 + numero2*1)}
+                    if (operacao == '-') {this.valor = (numero1*1 - numero2*1)}
+                    if (operacao == 'x') {this.valor = (numero1*1 * numero2*1)}
+                    if (operacao == '/') {this.valor = (numero1*1 / numero2*1)}
+                    if (operacao == '^') {this.valor = (numero1*1 ^ numero2*1)}
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>
