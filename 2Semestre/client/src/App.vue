@@ -51,7 +51,9 @@
 
     <main>
       <v-container class="mt-4">
+        <transition name="fade">
         <router-view/>
+        </transition>
       </v-container>
     </main>
   </v-app>
@@ -87,4 +89,22 @@ export default {
   }
 };
 </script>
+
+<style>
+.fade-enter-active,
+.fade-leave-active{
+  transition-property: all;
+  transition-duration: 0.25;  
+}
+
+.fade-enter-active{
+  transition-delay:0.25;
+}
+.fade-enter,
+.fade-leave-active{
+  opacity:0;
+  transform: translateX(-25px);
+}
+</style>
+
 
